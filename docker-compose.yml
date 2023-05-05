@@ -69,7 +69,7 @@ services:
       - .env
     volumes:
       - ./app/rasa:/app
-      - ./app/scripts/wait-for-it.sh:/wait-for-it.sh
+      - ./app/scripts/wait-for-it.sh:/app/wait-for-it.sh
 
     ports:
       - 5005:5005
