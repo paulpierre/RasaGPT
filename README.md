@@ -1,5 +1,5 @@
 
-![RasaGPT Logo](https://github.com/paulpierre/RasaGPT/blob/main/github/title.png?raw=true)
+![RasaGPT Logo](https://github.com/paulpierre/RasaGPT/blob/main/github/rasagpt-banner.png?raw=true)
 
 <br/><br/>
 
