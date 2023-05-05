@@ -73,7 +73,7 @@ services:
 
     ports:
       - 5005:5005
-    entrypoint: ["/bin/bash", "-c", "chmod +x /wait-for-it.sh && /wait-for-it.sh rasa-credentials:8889 -t 120 -o && rasa run --enable-api --cors '*' --debug --credentials /app/credentials.yml --endpoints /app/endpoints.yml --model /app/models"] 
+    entrypoint: ["/bin/bash", "-c", "chmod +x /app/wait-for-it.sh && /app/wait-for-it.sh rasa-credentials:8889 -t 120 -o && rasa run --enable-api --cors '*' --debug --credentials /app/credentials.yml --endpoints /app/endpoints.yml --model /app/models"] 
     networks:
       - chat-network
     depends_on:
