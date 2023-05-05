@@ -1,6 +1,7 @@
 import random
 import openai
 import json
+
 from langchain.docstore.document import Document as LangChainDocument
 from langchain.embeddings.openai import OpenAIEmbeddings
 from fastapi import HTTPException
@@ -254,21 +255,6 @@ def chat_query(
     if session_id:
         meta["session_id"] = session_id
 
-    # ------------------
-    # Create ChatSession
-    # ------------------
-    # chat_session = ChatSession.create({
-    #     'user_id': user.id,
-    #     'session_id': session_id,
-    #     'project_id': project.id if project else None,
-    #     'channel': channel.value if channel else None,
-    #     'user_message': query_str,
-    #     'embeddings': query_embeddings,
-    #     'token_count': token_count if token_count > 0 else None,
-    #     'response': response_message,
-    #     'meta': meta
-    # })
-    # #return ChatSession.from_orm(chat_session)
     chat_session = ChatSession(
         user_id=user.id,
         session_id=session_id,
@@ -406,6 +392,9 @@ def get_nodes_by_embedding(
     return [Node.by_uuid(str(node[0])) for node in nodes] if nodes else []
 
 
+# --------------
+# Queries OpenAI
+# --------------
 def retrieve_llm_response(
     query_str: str,
     model: Optional[LLM_MODELS] = LLM_MODELS.GPT_35_TURBO,

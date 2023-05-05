@@ -1,3 +1,7 @@
+'''
+seed.py users the models in model.py and populates the database with dummy content
+'''
+
 # ----------------
 # Database imports
 # ----------------

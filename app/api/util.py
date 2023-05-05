@@ -1,6 +1,5 @@
 from fastapi import UploadFile
 from functools import partial
-from sqlmodel import Session
 from hashlib import sha256
 from uuid import UUID
 import aiofiles
@@ -14,24 +13,39 @@ _snake_1 = partial(re.compile(r'(.)((?<![^A-Za-z])[A-Z][a-z]+)').sub, r'\1_\2')
 _snake_2 = partial(re.compile(r'([a-z0-9])([A-Z])').sub, r'\1_\2')
 
 
+# ---------------------------------------
+# Convert to snake casing (for DB models)
+# ---------------------------------------
 def snake_case(string: str) -> str:
     return _snake_2(_snake_1(string)).casefold()
 
 
-def is_uuid(uuid: str):
+# ------------------------------
+# Check if string is UUID format
+# ------------------------------
+def is_uuid(uuid: str) -> bool:
     uuid = str(uuid) if isinstance(uuid, UUID) else uuid
     return re.match(r"^[0-9a-f]{8}-?[0-9a-f]{4}-?4[0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$", uuid)
 
 
+# ---------------------------
+# Writes a file to disk async
+# ---------------------------
 async def save_file(file: UploadFile, file_path: str):
     async with aiofiles.open(file_path, 'wb') as f:
         await f.write(await file.read())
 
 
+# ---------------------------
+# Get SHA256 hash of contents
+# ---------------------------
 def get_sha256(contents: bytes):
     return sha256(contents).hexdigest()
 
 
+# -----------------------
+# Get SHA256 hash of file
+# -----------------------
 def get_file_hash(
         file_path: str,
 ):
@@ -65,6 +79,7 @@ def sanitize_output(
 
     logger.debug(f'Output: {res}')
     return res
+
 
 # ------------------
 # Clean up LLM input

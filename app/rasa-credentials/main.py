@@ -40,7 +40,11 @@ logger.debug(
 )
 
 
+# ---------------------------------
+# Wait for ngrok API to come online
+# ---------------------------------
 async def wait_for_ngrok_api():
+
     while True:
         try:
             async with httpx.AsyncClient() as client:
@@ -53,6 +57,9 @@ async def wait_for_ngrok_api():
             await asyncio.sleep(RETRY_INTERVAL)
 
 
+# -------------------------------------
+# Fetch list of active tunnels on ngrok
+# -------------------------------------
 async def get_active_tunnels():
     try:
         response = requests.get(f"{NGROK_API_URL}/api/tunnels")
@@ -63,12 +70,18 @@ async def get_active_tunnels():
     return tunnels
 
 
+# -----------------
+# Stop ngrok tunnel
+# -----------------
 async def stop_tunnel(tunnel):
     tunnel_id = tunnel["name"]
     response = requests.delete(f"{NGROK_API_URL}/api/tunnels/{tunnel_id}")
     response.raise_for_status()
 
 
+# ----------------------
+# Stop all ngrok tunnels
+# ----------------------
 async def stop_all_tunnels():
     active_tunnels = await get_active_tunnels()
     if not active_tunnels:
@@ -79,6 +92,9 @@ async def stop_all_tunnels():
             await stop_tunnel(tunnel)
 
 
+# -------------------------------------
+# Get the first ngrok tunnel w/ retries
+# -------------------------------------
 async def get_tunnel(retry=0):
     if retry > RETRY_LIMIT:
         raise Exception(
@@ -95,6 +111,9 @@ async def get_tunnel(retry=0):
         return active_tunnels[0]["public_url"]
 
 
+# -------------------
+# Create ngrok tunnel
+# -------------------
 async def create_tunnel():
     response = requests.post(
         f"{NGROK_API_URL}/api/tunnels",

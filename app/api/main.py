@@ -102,14 +102,12 @@ from config import (
 # Mount static files
 # ------------------
 
-# TODO: implement this: https://fastapi.tiangolo.com/advanced/extending-openapi/#change-the-theme
-# See if you can style it to the Radix UI theme
-
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# ---------------------
 # Health check endpoint
 # ---------------------
 @app.get("/health", include_in_schema=False)

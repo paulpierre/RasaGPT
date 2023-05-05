@@ -7,8 +7,9 @@ COPY . .
 RUN apt-get -y update
 RUN apt-get -y install curl
 
-
+# Install python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+
 # Expose the port
 EXPOSE 8889
 
