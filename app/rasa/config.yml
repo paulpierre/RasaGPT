@@ -1,0 +1,5 @@
+recipe: default.v1
+assistant_id: 20230303-132941-slow-interest
+language: en
+policies:
+  - name: RulePolicy

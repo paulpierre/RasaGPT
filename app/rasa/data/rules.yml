@@ -1,0 +1,8 @@
+version: "3.1"
+
+rules:
+
+- rule: out-of-scope
+  steps:
+  - intent: out_of_scope
+  - action: action_gpt_fallback

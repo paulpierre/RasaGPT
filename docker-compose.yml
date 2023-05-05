@@ -1,0 +1,185 @@
+# -------------------------------------
+# ▒█▀▀█ █▀▀█ █▀▀ █▀▀█ ▒█▀▀█ ▒█▀▀█ ▀▀█▀▀ 
+# ▒█▄▄▀ █▄▄█ ▀▀█ █▄▄█ ▒█░▄▄ ▒█▄▄█ ░▒█░░ 
+# ▒█░▒█ ▀░░▀ ▀▀▀ ▀░░▀ ▒█▄▄█ ▒█░░░ ░▒█░░
+# +-----------------------------------+
+# | http://RasaGPT.dev by @paulpierre |
+# +-----------------------------------+
+
+version: '3.9'
+
+services:
+
+# -------------------
+# API service for LLM
+# -------------------
+  api:
+    build:
+      context: ./app/api
+    restart: always
+    container_name: chat_api
+    env_file:
+      - .env
+    ports:
+      - 8888:8888
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://api:8888/health"]
+      interval: 15s
+      retries: 5
+    depends_on:
+      - db
+    networks:
+      - chat-network
+    network_mode: bridge
+    volumes:
+      - ./app/scripts/wait-for-it.sh:/app/api/wait-for-it.sh
+      - ./app/api:/app/api
+
+
+# -------------------
+# Ngrok agent service
+# -------------------
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: chat_ngrok
+    ports:
+      - 4040:4040
+    env_file:
+      - .env
+    environment:
+      NGROK_CONFIG: /etc/ngrok.yml
+      NGROK_AUTH_TOKEN: ${NGROK_AUTH_TOKEN:-}
+      NGROK_DEBUG: ${NGROK_DEBUG:-true}
+      NGROK_API_KEY: ${NGROK_API_KEY:-}
+    networks:
+      - chat-network
+    network_mode: bridge
+    volumes:
+      - ./app/rasa/ngrok.yml:/etc/ngrok.yml
+    restart: unless-stopped
+
+
+# -----------------
+# Core Rasa service
+# -----------------
+  rasa-core:
+    image: khalosa/rasa-aarch64:3.5.2
+    container_name: chat_rasa_core
+    env_file:
+      - .env
+    volumes:
+      - ./app/rasa:/app
+      - ./app/scripts/wait-for-it.sh:/app/wait-for-it.sh
+
+    ports:
+      - 5005:5005
+    entrypoint: ["/bin/bash", "-c", "chmod +x /app/wait-for-it.sh && /app/wait-for-it.sh rasa-credentials:8889 -t 120 -o && rasa run --enable-api --cors '*' --debug --credentials /app/credentials.yml --endpoints /app/endpoints.yml --model /app/models"] 
+    networks:
+      - chat-network
+    depends_on:
+      - rasa-actions
+      - rasa-credentials
+
+
+# --------------------
+# Rasa actions service
+# --------------------
+  rasa-actions:
+    build:
+      context: ./app/rasa
+      dockerfile: ./actions/Dockerfile
+    container_name: chat_rasa_actions
+    env_file:
+      - .env
+    ports:
+      - 5055:5055
+    depends_on:
+      - rasa-credentials
+    networks:
+      - chat-network
+
+
+# -------------------------------
+# Rasa credentials helper service
+# -------------------------------
+  rasa-credentials:
+    build:
+      context: ./app/rasa-credentials
+      dockerfile: Dockerfile
+    container_name: chat_rasa_credentials
+    volumes:
+      - ./app/rasa:/app/rasa
+      - ./app/rasa-credentials:/app/rasa-credentials
+    ports:
+      - 8889:8889
+    env_file:
+      - .env
+    networks:
+      - chat-network
+    network_mode: bridge
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://rasa-credentials:8889"]
+      interval: 15s
+      retries: 5
+
+
+# -------------------------
+# Postgres database service
+# -------------------------
+  db:
+    build:
+      context: ./app/db
+    container_name: chat_db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - ./mnt/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      retries: 5
+    networks:
+      - chat-network
+
+
+# --------------------------------
+# PgAdmin database browser service
+# --------------------------------
+  pgadmin:
+    container_name: chat_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - ./mnt/pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - chat-network
+
+
+# ----------------------------
+# Container log viewer service
+# ----------------------------
+  dozzle:
+    container_name: chat_dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9999:8080
+    depends_on:
+      - db
+
+networks:
+  chat-network:

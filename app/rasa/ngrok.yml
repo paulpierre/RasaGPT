@@ -1,0 +1,12 @@
+region: us
+version: 2
+log_level: debug
+web_addr: ngrok:4040
+console_ui: true
+tunnels:
+    chat_api:
+        proto: http
+        addr: api:8888
+connect_timeout: 30s
+heartbeat_interval: 1m
+heartbeat_tolerance: 5s

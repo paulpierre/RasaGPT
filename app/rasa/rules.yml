@@ -1,0 +1,8 @@
+rules:
+
+# - rule: Fallback rule
+#   condition:
+#   - active_loop: null
+#   steps:
+#   - intent: nlu_fallback
+#   - action: action_gpt_fallback

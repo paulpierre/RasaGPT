@@ -1,0 +1,26 @@
+version: "3.1"
+
+
+slots:
+  results:
+    type: text
+    mappings:
+    - type: custom
+      initial_value:
+      action: action_gpt_fallback
+
+intents:
+  - greet
+  - out_of_scope
+
+responses:
+  utter_greet:
+  - text: "Hey! How are you?"
+
+actions:
+  - action_gpt_fallback
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
