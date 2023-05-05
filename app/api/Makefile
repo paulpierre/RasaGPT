@@ -1,4 +1,4 @@
-.PHONY: default banner install run stop db-purge env db db-stop models api api-stop seed
+.PHONY: default banner install install-seed seed run stop db-purge api-install env-create env db db-stop api api-stop
 
 default: help
 

@@ -1,4 +1,4 @@
-.PHONY: default banner help install build run stop restart logs ngrok pgadmin api api-stop db db-stop db-purge purge models shell-api shell-db shell-rasa shell-actions rasa-train rasa-start rasa-stop
+.PHONY: default banner help install build run stop restart rasa-restart rasa-stop rasa-start rasa-build seed logs ngrok pgadmin api api-stop db db-stop db-purge purge models shell-api shell-db shell-rasa shell-actions rasa-train rasa-start rasa-stop env-var
 
 defaut: help
 
@@ -25,6 +25,7 @@ help:
 	@echo "make models - Build Rasa models"
 	@echo "make purge - Remove all docker images"
 	@echo "make db-purge - Delete all data in database"
+	@echo "make db-reset - Reset database to initial state"
 	@echo "make shell-api - Open shell in API container"
 	@echo "make shell-db - Open shell in database container"
 	@echo "make shell-rasa - Open shell in Rasa container"
@@ -176,10 +177,19 @@ db-stop:
 
 
 db-reset:
+	@echo "⛔  Are you sure you want to reinitialize the database, you will lose all data? [y/N]\n"
+	@read confirmation; \
+	if [ "$$confirmation" = "y" ] || [ "$$confirmation" = "Y" ]; then \
+		make db-purge \
+		make api \
+		make models \
+		echo "✅ Database re-initialize"; \
+	else \
+		echo "Aborted."; \
+	fi
+
 	@echo " Resetting the database ..\n"
-	@make db-purge
-	@make api
-	@make models
+	
 
 # -------------------------------
 # Build the schema in Postgres DB
