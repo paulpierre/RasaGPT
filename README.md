@@ -71,6 +71,7 @@ make
 - Bot determines whether human handoff is necessary
 - Bot generates tags based on user questions and response automatically
 - Full API documentation via [Swagger](https://github.com/swagger-api/swagger-ui) and [Redoc](https://redocly.github.io/redoc/) included
+- [PGAdmin](https://github.com/pgadmin-org/pgadmin4) included so you can browser your database
 - [Ngrok](ngrok.com/docs) end-points are automatically generated for you on startup so your bot can always be accessed via `https://t.me/yourbotname`
 - Embedding similarity search built into Postgres via [pgvector](https://github.com/pgvector/pgvector) and Postgres functions
 - [Dummy data included](https://github.com/paulpierre/RasaGPT/tree/main/app/api/data/training_data) for you to test and experiment
