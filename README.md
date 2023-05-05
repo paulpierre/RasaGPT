@@ -8,6 +8,12 @@
 
 💬 RasaGPT is the first headless LLM chatbot platform built on top of [Rasa](https://github.com/RasaHQ/rasa) and [Langchain](https://github.com/hwchase17/langchain). It is boilerplate and a reference implementation of Rasa and Telegram utilizing an LLM library like Langchain for indexing, retrieval and context injection.
 
+<br/>
+
+- 📚 Resources: [https://rasagpt.dev](https://rasagpt.dev)
+- 🧑‍💻 Github: [https://github.com/paulpierre/RasaGPT](https://github.com/paulpierre/RasaGPT)
+- 🧙 Author: [@paulpierre](https://twitter.com/paulpierre)
+
 <br/><br/>
 
 # 💁‍♀️ Why RasaGPT?
