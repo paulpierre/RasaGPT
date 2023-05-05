@@ -6,7 +6,7 @@
 # 📺 Demo walkthrough
 <br/>
 
-[![RasaGPT Youtube Video](https://img.youtube.com/vi/GAPnQ0qf1-E/0.jpg)](https://youtu.be/GAPnQ0qf1-E)
+[![RasaGPT Youtube Video](https://github.com/paulpierre/RasaGPT/blob/main/github/rasagpt-video-title-screen.png?raw=true)](https://youtu.be/GAPnQ0qf1-E)
 
 <br/><br/>
 
