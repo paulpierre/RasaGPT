@@ -16,6 +16,22 @@
 
 <br/><br/>
 
+# 💬 What is Rasa?
+
+In their own words:
+
+>💬 Rasa is an open source (Python) machine learning framework to automate text- and voice-based conversations: NLU, dialogue management, connect to Slack, Facebook, and more - Create chatbots and voice assistants
+
+<br/>
+
+In my words: 
+<br/>
+
+[Rasa](https://rasa.com/) is a very popular (dare I say de facto?) and easy-enough to use chatbot framework with built in NLU ML pipelines that are obsolete and a conceptual starting point for a reimagined chatbot framework in a world of LLMs.
+
+<br/><br/>
+
+
 # 💁‍♀️ Why RasaGPT?
 
 RasaGPT works out of the box. A lot of the implementing headaches were sorted out so you don’t have to, including:
