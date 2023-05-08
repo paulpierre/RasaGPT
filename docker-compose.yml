@@ -30,7 +30,6 @@ services:
       - db
     networks:
       - chat-network
-    network_mode: bridge
     volumes:
       - ./app/scripts/wait-for-it.sh:/app/api/wait-for-it.sh
       - ./app/api:/app/api
@@ -53,7 +52,6 @@ services:
       NGROK_API_KEY: ${NGROK_API_KEY:-}
     networks:
       - chat-network
-    network_mode: bridge
     volumes:
       - ./app/rasa/ngrok.yml:/etc/ngrok.yml
     restart: unless-stopped
@@ -116,7 +114,6 @@ services:
       - .env
     networks:
       - chat-network
-    network_mode: bridge
     healthcheck:
       test: ["CMD", "curl", "-f", "http://rasa-credentials:8889"]
       interval: 15s
@@ -183,3 +180,4 @@ services:
 
 networks:
   chat-network:
+    driver: bridge
