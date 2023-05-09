@@ -64,7 +64,7 @@ Getting started is easy, just make sure you meet the dependencies below.
 
 <br/>
 
-> ⚠️⚠️⚠️ ** ATTENTION NON-MACOS USERS: ** If you are using Linux or Windows, you will need to change the image name from `khalosa/rasa-aarch64:3.5.2` to `rasa/rasa:latest`  in [docker-compose.yml on line #64](https://github.com/paulpierre/RasaGPT/blob/0463274ee3174580f2099501e0f8c58238987f9b/docker-compose.yml#L64) and in [the actions Dockerfile here](https://github.com/paulpierre/RasaGPT/blob/0463274ee3174580f2099501e0f8c58238987f9b/app/rasa/actions/Dockerfile#L1)
+> ⚠️⚠️⚠️ ** ATTENTION NON-MACOS USERS: ** If you are using Linux or Windows, you will need to change the image name from `khalosa/rasa-aarch64:3.5.2` to `rasa/rasa:latest`  in [docker-compose.yml on line #64](https://github.com/paulpierre/RasaGPT/blob/0463274ee3174580f2099501e0f8c58238987f9b/docker-compose.yml#L64) and in [the actions Dockerfile on line #1 here](https://github.com/paulpierre/RasaGPT/blob/0463274ee3174580f2099501e0f8c58238987f9b/app/rasa/actions/Dockerfile#L1)
 
 <br/>
 
