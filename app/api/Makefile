@@ -1,5 +1,5 @@
 .PHONY: default banner install install-seed seed run stop db-purge api-install env-create env db db-stop api api-stop
-
+SHELL := /bin/bash 
 default: help
 
 help:
