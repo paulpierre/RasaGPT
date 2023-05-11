@@ -601,7 +601,7 @@ Not exposed via API, but this represent a question and answer between the User a
 
 `pgvector` is a plugin for Postgres and automatically installed enabling your to store and calculate vector data types. We have our own implementation because the Langchain PGVector class is not flexible to adapt to our schema and we want flexibility.
 
-1. By default in postgres, any files in the container's path `/docker-entry-initdb.d` get run if the database has not been initialized. In the [postgres Dockerfile](https://github.com/paulpierre/RasaGPT/blob/main/app/db/Dockerfile) we copy []`create_db.sh` which creates](https://github.com/paulpierre/RasaGPT/blob/main/app/db/create_db.sh) the db and user for our database
+1. By default in postgres, any files in the container's path `/docker-entry-initdb.d` get run if the database has not been initialized. In the [postgres Dockerfile](https://github.com/paulpierre/RasaGPT/blob/main/app/db/Dockerfile) we copy [`create_db.sh` which creates](https://github.com/paulpierre/RasaGPT/blob/main/app/db/create_db.sh) the db and user for our database
 2. In the [`models` command](https://github.com/paulpierre/RasaGPT/blob/dca9be4cd6fe4c9daaff1564267cdb5327a384a5/Makefile#L64) in the [Makefile](https://github.com/paulpierre/RasaGPT/blob/main/Makefile), we run the [models.py](https://github.com/paulpierre/RasaGPT/blob/main/app/api/models.py) in the API container which creates the tables from the models.
 3. The [`enable_vector` method](https://github.com/paulpierre/RasaGPT/blob/dca9be4cd6fe4c9daaff1564267cdb5327a384a5/app/api/models.py#L266) enables the pgvector extension in the database
 
