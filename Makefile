@@ -227,32 +227,32 @@ db-purge:
 # --------------------------------------
 shell-api:
 	@echo "💻🐢  Opening a bash shell in the RasaGPT API container ..\n"
-	@if docker ps | grep api > /dev/null; then \
-		docker exec -it $$(docker ps | grep api | tr -d '\n' | awk '{print $$1}') /bin/bash; \
+	@if docker ps | grep chat_api > /dev/null; then \
+		docker exec -it $$(docker ps | grep chat_api | tr -d '\n' | awk '{print $$1}') /bin/bash; \
 	else \
-		echo "Container api is not running"; \
+		echo "Container chat_api is not running"; \
 	fi
 
 # ---------------------------------------
 # Open a bash shell in the Rasa container
 # ---------------------------------------
 shell-rasa:
-	@echo "💻🐢  Opening a bash shell in the rasa-core container ..\n"
-	@if docker ps | grep rasa-core > /dev/null; then \
-		docker exec -it $$(docker ps | grep rasa-core | tr -d '\n' | awk '{print $$1}') /bin/bash; \
+	@echo "💻🐢  Opening a bash shell in the chat_rasa_core container ..\n"
+	@if docker ps | grep chat_rasa_core > /dev/null; then \
+		docker exec -it $$(docker ps | grep chat_rasa_core | tr -d '\n' | awk '{print $$1}') /bin/bash; \
 	else \
-		echo "Container rasa-core is not running"; \
+		echo "Container chat_rasa_core is not running"; \
 	fi
 
 # -----------------------------------------------
 # Open a bash shell in the Rasa actions container
 # -----------------------------------------------
 shell-actions:
-	@echo "💻🐢  Opening a bash shell in the rasa-actions container ..\n"
-	@if docker ps | grep rasa-actions > /dev/null; then \
-		docker exec -it $$(docker ps | grep rasa-actions | tr -d '\n' | awk '{print $$1}') /bin/bash; \
+	@echo "💻🐢  Opening a bash shell in the chat_rasa_actions container ..\n"
+	@if docker ps | grep chat_rasa_actions > /dev/null; then \
+		docker exec -it $$(docker ps | grep chat_rasa_actions | tr -d '\n' | awk '{print $$1}') /bin/bash; \
 	else \
-		echo "Container rasa-actions is not running"; \
+		echo "Container chat_rasa_actions is not running"; \
 	fi
 
 # -------------------------------------------
@@ -260,10 +260,10 @@ shell-actions:
 # -------------------------------------------
 shell-db:
 	@echo "💻🐢  Opening a bash shell in the Postgres container ..\n"
-	@if docker ps | grep db > /dev/null; then \
-		docker exec -it $$(docker ps | grep db | tr -d '\n' | awk '{print $$1}') /bin/bash; \
+	@if docker ps | grep chat_db > /dev/null; then \
+		docker exec -it $$(docker ps | grep chat_db | tr -d '\n' | awk '{print $$1}') /bin/bash; \
 	else \
-		echo "Container db is not running"; \
+		echo "Container chat_db is not running"; \
 	fi
 
 # ==================
