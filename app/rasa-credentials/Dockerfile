@@ -5,7 +5,7 @@ COPY . .
 
 # Add CURL
 RUN apt-get -y update
-RUN apt-get -y install curl
+RUN apt-get -y install curl gcc
 
 # Install python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
