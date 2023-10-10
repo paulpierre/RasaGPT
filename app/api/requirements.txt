@@ -1,4 +1,4 @@
-langchain==0.0.157
+langchain==0.0.312
 uvicorn[standard]
 python-multipart
 psycopg2-binary
