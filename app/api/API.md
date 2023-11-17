@@ -10,7 +10,7 @@
 
 RasaGPT just works out of the box. I went through all the implementation headaches so you don’t have to, including
 
-- Creating your own proprietary bot end-point using FastAPI, document upload and “training” 'pipeline included
+- Creating your own proprietary bot endpoint using FastAPI, document upload and “training” 'pipeline included
 - How to integrate Langchain/LlamaIndex and Rasa
 - Library conflicts with LLM libraries and passing metadata
 - Dockerized support on MacOS for running Rasa
@@ -54,11 +54,11 @@ make
 - LLM  “learns” on an arbitrary corpus of data using Langchain
 - Upload documents and “train” all via FastAPI
 - Document versioning and automatic “re-training” implemented on upload
-- Customize your own async end-points
+- Customize your own async endpoints
 - Bot determines whether human handoff is necessary
 - Bot generates tags based on user questions and response automatically
 - Full API documentation via Swagger and Redoc included
-- Ngrok end-points are automatically generated for you on startup so your bot can always be accessed via `https://t.me/yourbotname`
+- ngrok endpoints are automatically generated for you on startup so your bot can always be accessed via `https://t.me/yourbotname`
 - Embedding similarity search built into Postgres via pgvector and Postgres functions
 - Dummy data included for you to test and experiment
 - Unlimited use cases from help desk, customer support, quiz, e-learning, dungeon and dragons,  and more
@@ -88,7 +88,7 @@ make
 - Docker & Docker compose ([Docker desktop MacOS](https://www.docker.com/products/docker-desktop/))
 - Open AI [API key](https://platform.openai.com/account/api-keys)
 - Telegram [bot credentials](https://core.telegram.org/bots#how-do-i-create-a-bot)
-- Ngrok [auth token](https://dashboard.ngrok.com/tunnels/authtokens)
+- ngrok [authtoken](https://dashboard.ngrok.com/tunnels/authtokens)
 - Make ([MacOS](https://formulae.brew.sh/formula/make)/[Windows](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows))
 - SQLModel
 
@@ -529,7 +529,7 @@ Not exposed via API, but this represent a question and answer between the User a
     - [config.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/config.yml) - contains NLU pipeline and policy configuration. What matters is setting the `FallbackClassifier` threshold
     - [credentials.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/credentials.yml) - contains the path to our webhook and Telegram credentials. This will get updated by the helper service `rasa-credentials` via [update_credentials.py](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/update_credentials.py)
     - [domain.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/domain.yml) - This contains the chat entrypoint logic configuration like intent and the action to take against the intent. Here we add the `action_gpt_fallback` action which will trigger our [actions server](https://github.com/paulpierre/RasaGPT/tree/main/app/rasa/actions)
-    - [endpoints.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/endpoints.yml) - This is where we set our custom action end-point for Rasa to trigger our fallback
+    - [endpoints.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/endpoints.yml) - This is where we set our custom action endpoint for Rasa to trigger our fallback
     - [nlu.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/data/nlu.yml) - this is where we set our intent `out_of_scope`
     - [rules.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/data/rules.yml) - we set a rule for this intent that it should trigger the action `action_gpt_fallback`
     - [actions.py](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/actions/actions.py) - this is where we define and express our action via the `ActionGPTFallback` class. The method `name` returns the action we defined for our intent above
@@ -542,8 +542,8 @@ Not exposed via API, but this represent a question and answer between the User a
 ## Telegram
 
 1. Rasa automatically updates the Telegram Bot API with your callback webhook from [credentials.yml](https://github.com/paulpierre/RasaGPT/blob/main/app/rasa/credentials.yml).
-2. By default this is static. Since we are running on our local machine, we leverage [Ngrok](https://ngrok.com/) to generate a publically accessible URL and reverse tunnel into our docker container
-3. `rasa-credentials` service takes care of this process for you. Ngrok runs as a service, once it is ready `rasa-credentials` calls the local ngrok API to retrieve the tunnel URL and updates the `credentials.yml` file and restarts Rasa for you
+2. By default this is static. Since we are running on our local machine, we leverage [ngrok](https://ngrok.com/) to generate a publicly accessible URL and reverse tunnel into our docker container
+3. `rasa-credentials` service takes care of this process for you. ngrok runs as a service, once it is ready `rasa-credentials` calls the local ngrok API to retrieve the tunnel URL and updates the `credentials.yml` file and restarts Rasa for you
 4. The webhook Telegram will send messages to will be our FastAPI server. Why this instead of Rasa? Because we want flexibility to capture metadata which Rasa makes a PITA and centralizing to the API server is ideal
 5. The FastAPI server forwards this to the Rasa webhook
 6. Rasa will then determine what action to take based on the user intent. Since the intents have been nerfed for this demo, it will go to the fallback action running in `actions.py`
@@ -607,7 +607,7 @@ In general, check your docker container logs by simply going to 👉 http://loc
 
 <br/>
 
-## Ngrok issues
+## ngrok issues
 
 Always check that your webhooks with ngrok and Telegram match. Simply do this by
 
@@ -634,7 +634,7 @@ curl -sS "https://api.telegram.org/bot<your-bot-secret-token>/getWebhookInfo" | 
 
 <br/>
 
-.. which should match the URL in your `credentials.yml` file or visit the Ngrok admin UI 👉 [http://localhost:4040/status](http://localhost:4040/status)
+.. which should match the URL in your `credentials.yml` file or visit the ngrok admin UI 👉 [http://localhost:4040/status](http://localhost:4040/status)
 
 ![ngrok-admin.png](https://github.com/paulpierre/RasaGPT/blob/main/github/ngrok-admin.png?raw=true)
 

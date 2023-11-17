@@ -36,7 +36,7 @@ services:
 
 
 # -------------------
-# Ngrok agent service
+# ngrok agent service
 # -------------------
   ngrok:
     image: ngrok/ngrok:latest
