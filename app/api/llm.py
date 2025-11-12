@@ -2,11 +2,11 @@ import random
 import openai
 import json
 
-from langchain.docstore.document import Document as LangChainDocument
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_core.documents import Document as LangChainDocument
+from langchain_openai import OpenAIEmbeddings
 from fastapi import HTTPException
 from uuid import UUID, uuid4
-from langchain.text_splitter import (
+from langchain_text_splitters import (
     CharacterTextSplitter,
     MarkdownTextSplitter
 )
@@ -18,7 +18,7 @@ from util import (
     sanitize_input,
     sanitize_output
 )
-from langchain import OpenAI
+from langchain_openai import OpenAI
 from typing import (
     List,
     Union,
