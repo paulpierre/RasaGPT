@@ -25,7 +25,7 @@ if not env:
     if os.path.exists(env_file):
         load_dotenv(dotenv_path=env_file)
     else:
-        raise Exception(f"Env file {env})file not found")
+        raise Exception(f"Env file {env_file} not found")
 
 # -----------------------
 # Configuration constants
